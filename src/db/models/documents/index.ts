@@ -1,19 +1,42 @@
 import { Schema, model, Document as MongooseDocument } from "mongoose";
 
 export interface DocumentAttributes extends MongooseDocument {
-  name: string;
+  title: string;
+  type: string;
   description: string;
-  price: number;
+  jurisdiction: string;
+  jurisdictionalLevel: string;
+  jurisdictionalVenue: string;
+  issuedAt: Date;
+  deadline: Date;
 }
 
 const DocumentSchema = new Schema(
   {
-    title: String,
-    description: String,
-    jurisdiction: String,
-    jurisdictionalLevel: String,
-    jurisdictionalVenue: String,
-    deadline: Date,
+    title: {
+      type: String,
+    },
+    type: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    jurisdiction: {
+      type: String,
+    },
+    jurisdictionalLevel: {
+      type: String,
+    },
+    jurisdictionalVenue: {
+      type: String,
+    },
+    issuedAt: {
+      type: Date,
+    },
+    deadline: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

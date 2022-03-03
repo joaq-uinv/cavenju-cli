@@ -3,10 +3,11 @@ import config from "../config";
 
 export const connectToDB = async () => {
   try {
-    await mongoose.connect(config.databaseURL, {
+    const connection = await mongoose.connect(config.databaseURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as ConnectOptions);
+    return connection;
   } catch (e) {
     console.error(e);
   }

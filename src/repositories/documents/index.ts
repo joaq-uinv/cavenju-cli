@@ -4,7 +4,7 @@ class DocumentRepositoryClass {
   constructor() {}
 
   async getAll() {
-    const documents = await Document.find();
+    const documents = await Document.find().lean();
     return documents;
   }
 
@@ -14,7 +14,7 @@ class DocumentRepositoryClass {
   }
 
   async update(_id: string, payload: any) {
-    const document = await Document.updateOne({ _id }, { payload });
+    const document = await Document.updateOne({ _id }, payload);
     return document;
   }
 
