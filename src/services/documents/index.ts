@@ -7,7 +7,11 @@ class DocumentServiceClass {
   private getDeadline(issuedAt: string) {
     const issuedAtParts: any = issuedAt.split("/");
     // month is 0-based, that's why issuedAtParts[1] - 1 is used
-    const issuedAtObject = new Date(+issuedAtParts[2], issuedAtParts[1] - 1, +issuedAtParts[0]);
+    const issuedAtObject = new Date(
+      +issuedAtParts[2],
+      issuedAtParts[1] - 1,
+      +issuedAtParts[0]
+    );
     const date = new Date(issuedAtObject);
 
     const year = date.getFullYear();
@@ -40,12 +44,12 @@ class DocumentServiceClass {
     return document;
   }
 
-  async update(_id: string, payload: any) {
-    await DocumentRepository.update(_id, payload);
+  async update(title: string, payload: any) {
+    await DocumentRepository.update(title, payload);
   }
 
-  async delete(_id: string) {
-    await DocumentRepository.delete(_id);
+  async delete(title: string) {
+    await DocumentRepository.delete(title);
   }
 }
 
