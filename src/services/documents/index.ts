@@ -26,6 +26,15 @@ class DocumentServiceClass {
     return deadline;
   }
 
+  private sanitizeObject(object: any) {
+    for (const key in object) {
+      if (object[key] === "") {
+        delete object[key];
+      }
+    }
+    return object;
+  }
+
   async getAll() {
     const documents = await DocumentRepository.getAll();
     return documents;
@@ -40,12 +49,13 @@ class DocumentServiceClass {
     return document;
   }
 
-  async update(_id: string, payload: any) {
-    await DocumentRepository.update(_id, payload);
+  async update(titles: any, payload: any) {
+    const sanitizedPayload = this.sanitizeObject(payload);
+    await DocumentRepository.update(titles, sanitizedPayload);
   }
 
-  async delete(_id: string) {
-    await DocumentRepository.delete(_id);
+  async delete(title: string) {
+    await DocumentRepository.delete(title);
   }
 }
 
