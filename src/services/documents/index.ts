@@ -44,8 +44,14 @@ class DocumentServiceClass {
     return document;
   }
 
-  async update(title: string, payload: any) {
-    await DocumentRepository.update(title, payload);
+  async update(titles: any, payload: any) {
+    const payloadKeys = Object.keys(payload);
+    const payloadValues = Object.values(payload);
+    const filteredValues = payloadValues.filter((elem: any) => elem !== "");
+
+    //todo: create obj with only non empty key-values as payload
+
+    await DocumentRepository.update(titles, payload);
   }
 
   async delete(title: string) {

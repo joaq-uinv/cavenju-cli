@@ -99,11 +99,11 @@ class CommandsClass {
   private async update() {
     console.clear();
 
-    const answers = await prompt(this.questions);
     const titles = await this.promptDocumentTitles();
+    const answers = await prompt(this.questions);
     await DocumentServices.update(titles.command, answers);
 
-    console.clear();
+    // console.clear();
 
     this.promptMenu();
   }
