@@ -7,11 +7,7 @@ class DocumentServiceClass {
   private getDeadline(issuedAt: string) {
     const issuedAtParts: any = issuedAt.split("/");
     // month is 0-based, that's why issuedAtParts[1] - 1 is used
-    const issuedAtObject = new Date(
-      +issuedAtParts[2],
-      issuedAtParts[1] - 1,
-      +issuedAtParts[0]
-    );
+    const issuedAtObject = new Date(+issuedAtParts[2], issuedAtParts[1] - 1, +issuedAtParts[0]);
     const date = new Date(issuedAtObject);
 
     const year = date.getFullYear();
@@ -30,6 +26,15 @@ class DocumentServiceClass {
     return deadline;
   }
 
+  private sanitizeObject(object: any) {
+    for (const key in object) {
+      if (object[key] === "") {
+        delete object[key];
+      }
+    }
+    return object;
+  }
+
   async getAll() {
     const documents = await DocumentRepository.getAll();
     return documents;
@@ -44,8 +49,9 @@ class DocumentServiceClass {
     return document;
   }
 
-  async update(title: string, payload: any) {
-    await DocumentRepository.update(title, payload);
+  async update(titles: any, payload: any) {
+    const sanitizedPayload = this.sanitizeObject(payload);
+    await DocumentRepository.update(titles, sanitizedPayload);
   }
 
   async delete(title: string) {

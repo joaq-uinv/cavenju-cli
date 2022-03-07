@@ -93,25 +93,28 @@ class CommandsClass {
     const answers = await prompt(this.questions);
     await DocumentServices.create(answers);
 
+    console.clear();
     this.promptMenu();
   }
 
   private async update() {
     console.clear();
 
-    const answers = await prompt(this.questions);
     const titles = await this.promptDocumentTitles();
+    const answers = await prompt(this.questions);
     await DocumentServices.update(titles.command, answers);
 
     console.clear();
-
     this.promptMenu();
   }
 
   private async delete() {
     console.clear();
+
     const titles = (await this.promptDocumentTitles()).command;
     await DocumentServices.delete(titles);
+
+    console.clear();
     this.promptMenu();
   }
 
