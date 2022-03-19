@@ -13,13 +13,13 @@ class DocumentRepositoryClass {
     return document;
   }
 
-  async update(_id: string, payload: any) {
-    const document = await Document.updateOne({ _id }, payload);
+  async update(title: string, payload: any) {
+    const document = await Document.updateOne({ title }, payload);
     return document;
   }
 
-  async delete(_id: string) {
-    const document = await Document.remove({ _id });
+  async delete(title: string) {
+    const document = await Document.deleteOne({ title });
     return document;
   }
 }
