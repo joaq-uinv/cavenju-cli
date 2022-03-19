@@ -1,4 +1,4 @@
-import { prompt } from "inquirer";
+import inquirer, { prompt } from "inquirer";
 import { DocumentServices } from "../services";
 
 enum CommandsEnum {
@@ -50,22 +50,6 @@ class CommandsClass {
     },
   ];
 
-  private async getDocumentTitles() {
-    const docs = await DocumentServices.getAll();
-    const titles = docs.map((doc: any) => doc.title);
-    return titles;
-  }
-
-  private async promptDocumentTitles() {
-    const titles = await prompt({
-      type: "list",
-      name: "command",
-      message: "Elegí un documento",
-      choices: await this.getDocumentTitles(),
-    });
-    return titles;
-  }
-
   private async getAll() {
     console.clear();
     const documents = await DocumentServices.getAll();
@@ -73,6 +57,7 @@ class CommandsClass {
     if (documents) {
       console.table(
         documents.map((document: any) => ({
+          //   ID: document._id,
           Caratula: document.title,
           Documento: document.type,
           Descripcion: document.description,
@@ -89,37 +74,20 @@ class CommandsClass {
 
   private async create() {
     console.clear();
-
     const answers = await prompt(this.questions);
     await DocumentServices.create(answers);
 
-    console.clear();
-    this.promptMenu();
-  }
+    console.log(`
+    
+    ${"Documento agregado con éxito"}
+    
+    `);
 
-  private async update() {
-    console.clear();
-
-    const titles = await this.promptDocumentTitles();
-    const answers = await prompt(this.questions);
-    await DocumentServices.update(titles.command, answers);
-
-    console.clear();
-    this.promptMenu();
-  }
-
-  private async delete() {
-    console.clear();
-
-    const titles = (await this.promptDocumentTitles()).command;
-    await DocumentServices.delete(titles);
-
-    console.clear();
     this.promptMenu();
   }
 
   async promptMenu() {
-    const answers = await prompt({
+    const answers = await inquirer.prompt({
       type: "list",
       name: "command",
       message: "Elegí una opción",
@@ -133,15 +101,6 @@ class CommandsClass {
       case CommandsEnum.Agregar:
         this.create();
         break;
-      case CommandsEnum.Actualizar:
-        this.update();
-        break;
-      case CommandsEnum.Eliminar:
-        this.delete();
-        break;
-      case CommandsEnum.Salir:
-        console.clear();
-        process.exit(0);
     }
   }
 }
