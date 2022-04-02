@@ -1,4 +1,4 @@
-import { DocumentAttributes } from "../../db/models";
+import { Document } from "../../db/models";
 import { DocumentRepository } from "../../repositories";
 
 class DocumentServiceClass {
@@ -26,6 +26,7 @@ class DocumentServiceClass {
     return deadline;
   }
 
+  //remove blank attributes from the payload i.e attributes that dont need to be updated
   private sanitizeObject(object: any) {
     for (const key in object) {
       if (object[key] === "") {
@@ -40,18 +41,20 @@ class DocumentServiceClass {
     return documents;
   }
 
-  async create(payload: DocumentAttributes) {
-    const document = await DocumentRepository.create(payload);
+  async create(payload: Document) {
     const deadline = this.getDeadline(payload.issuedAt.toString());
+    payload = {
+      ...payload,
+      deadline,
+    };
+    const document = await DocumentRepository.create(payload);
     //todo: set deadlines according rest of document type, jurisdiction, etc
-    document.deadline = deadline;
-    document.save();
     return document;
   }
 
-  async update(titles: any, payload: any) {
+  async update(title: any, payload: any) {
     const sanitizedPayload = this.sanitizeObject(payload);
-    await DocumentRepository.update(titles, sanitizedPayload);
+    await DocumentRepository.update(title, sanitizedPayload);
   }
 
   async delete(title: string) {
