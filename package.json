@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
-    "build": "tsc",
+    "build": "tsc && npx pkg -t node14-linux-x64,node14-macos-x64,node14-win-x64 . --out-path dist",
     "package": "pkg . --targets node14-macos-x64 --output cavenju",
     "prepare": "npm run build"
   },
