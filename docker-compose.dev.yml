@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  cli:
+    build: .
+    ports:
+      - 9229:9229 # enable debugger
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: dev
