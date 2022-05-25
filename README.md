@@ -25,3 +25,12 @@ Usage:
 ![alt text](assets/gif2.gif)
 
 ![alt text](assets/gif3.gif)
+
+## Docker
+
+To launch either environment
+
+- dev:
+  - run `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up`
+- prod:
+  - run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up`
